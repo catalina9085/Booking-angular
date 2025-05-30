@@ -1,10 +1,20 @@
-# Booking-angular
+# Conference Room Booking
 
-Aplicația frontend pentru Booking.
+Aplicație Angular pentru rezervarea sălilor de conferință.
 
-## Ce face această aplicație?
+## Funcționalități principale
 
-- Oferă interfața utilizator pentru gestionarea rezervărilor.
-- Comunică cu backend-ul prin API REST securizat cu JWT.
-- Permite autentificare, vizualizare și creare rezervări.
-- Utilizatorii cu rol de admin au acces la funcționalități suplimentare, precum gestionarea camerelor și vizualizarea tuturor rezervarilor
+- Autentificare cu email și parolă, token JWT pentru securitate  
+- Roluri: USER (rezervă săli), ADMIN (administrează sălile)  
+- Admin poate crea/edita/șterge săli cu locație (Google Maps), capacitate și facilități  
+- Prevenire suprapunere rezervări și validare capacitate săli  
+- Calendar și tabel pentru vizualizare disponibilitate săli  
+- Filtrare după capacitate, facilități și dată  
+- Export rezervări personale în CSV  
+
+## Tehnologii
+
+- Angular + Angular Material  
+- JWT + HTTP Interceptor pentru autentificare  
+- Google Maps API pentru locații
+- FullCalendar pentru calendar și vizualizare programări
