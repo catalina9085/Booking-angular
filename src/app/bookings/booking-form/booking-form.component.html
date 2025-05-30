@@ -1,0 +1,59 @@
+<app-room-card [room]="room()"></app-room-card>
+
+<div class="d-flex align-items-start">
+<form #bookingForm="ngForm" (ngSubmit)="onSubmit(bookingForm)" class="p-3 w-50">
+
+  <h1 mat-dialog-title>Reserve Your Room</h1>
+
+  @if(store.errorMessage()){<div style="color:darkred">{{ store.errorMessage() }}</div>}
+  @if(store.successMessage()){<div style="color:green">{{ store.successMessage() }}</div>}
+
+  <mat-form-field appearance="outline" class="w-75 mt-2">
+    <mat-label>Booking date</mat-label>
+    <input matInput [matDatepicker]="picker" name="date" [ngModel]="bookingRequest().date" (ngModelChange)="dateChanged($event)" required #dateControl="ngModel">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-75 mt-2">
+    <mat-label>Start time</mat-label>
+    <mat-icon matSuffix>access_time</mat-icon>
+    <input matInput type="time" name="time" [ngModel]="bookingRequest().startTime" (ngModelChange)="startTimeChanged($event)" required #startTimeControl="ngModel">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-75 mt-2">
+    <mat-label>End time</mat-label>
+    <mat-icon matSuffix>access_time</mat-icon>
+    <input matInput type="time" name="endTime" [ngModel]="bookingRequest().endTime" (ngModelChange)="endTimeChanged($event)" required #endTimeControl="ngModel">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-75 mt-2">
+    <mat-label>Group</mat-label>
+    <mat-select name="groupSelect" [ngModel]="bookingRequest().namedGroup" (ngModelChange)="groupChanged($event)" required #groupControl="ngModel">
+      @for(group of namedGroups();track group){
+        <mat-option [value]="group.name">
+          {{ group.name }} ({{ group.size }} people)
+        </mat-option>
+      }
+      <mat-option value="new">New group</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  @if(store.showNewGroup()){
+    <mat-form-field appearance="outline" class="w-75 mt-2">
+      <mat-label>New group name</mat-label>
+      <input matInput type="text" [ngModel]="bookingRequest().namedGroup" (ngModelChange)="newGroupNameChanged($event)" name="newGroupName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-75 mt-2">
+      <mat-label>Group size</mat-label>
+      <input matInput type="number" [ngModel]="bookingRequest().size" (ngModelChange)="newGroupSizeChanged($event)" name="groupSize" min="2" #sizeControl="ngModel">
+    </mat-form-field>
+    }
+
+  <button mat-raised-button type="submit" class="ms-2">Save</button>
+</form>
+
+<app-calendar [room]="room()" style="flex:1"></app-calendar>
+
+</div>

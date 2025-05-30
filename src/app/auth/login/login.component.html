@@ -1,0 +1,18 @@
+<div id="container" class="d-flex flex-column align-items-center justify-content-center w-100 m-0">
+  <h1 class="mb">Login</h1>
+  @if(message()){<div>{{message()}}</div>}
+  @if(errorMessage()){<div style="color:firebrick">{{errorMessage()}}</div>}
+  <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)" class="d-flex flex-column mt-3 mb-3">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" [ngModel]="loginRequest().email"  (ngModelChange)="emailChanged($event)" placeholder="email" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput name="password" type="password" [ngModel]="loginRequest().password" (ngModelChange)="passwordChanged($event)" placeholder="password" required>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">send</button>
+  </form>
+  <div style="color:gray">No account yet?<button mat-button [routerLink]="['/register']">register</button></div>
+</div>
+

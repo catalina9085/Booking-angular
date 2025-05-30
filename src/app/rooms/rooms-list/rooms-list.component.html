@@ -1,0 +1,88 @@
+
+
+<app-filter (filterChange)="filterChanged($event)" [amenities]="store.amenities()"></app-filter>
+
+<mat-drawer-container class="example-container">
+
+  <mat-drawer-content>
+<mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="admin">
+    <mat-header-cell *matHeaderCellDef> Admin </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button mat-icon-button [routerLink]="['/admin/room',row.id]">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="deleteRoom(row.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="location">
+    <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.location.city+(element.location.street ? ","+element.location.street : '')
+    +(element.location.building ? ","+element.location.building : '')}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="capacity">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Capacity </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.capacity }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="amenities">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Amenities </mat-header-cell>
+    <mat-cell *matCellDef="let element">@for(amenity of element.amenities;track amenity){
+      {{amenity +", "}}
+    } </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="available">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Availability </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      @if(element.available){<mat-icon style="color:green">check_circle</mat-icon> Available}
+    @else{<mat-icon style="color:darkred">cancel</mat-icon> Not available}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <div style="display: flex; gap: 3px;">
+      <button mat-mini-fab (click)="openMap(row)">
+        <mat-icon>room</mat-icon>
+      </button>
+      <button mat-mini-fab (click)="openCalendar(row)">
+        <mat-icon>date_range</mat-icon>
+      </button>
+      <button mat-button [routerLink]="['/booking',row.id]">
+        book now
+      </button>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columns"></mat-row>
+
+</mat-table>
+
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10,15]"></mat-paginator>
+
+  </mat-drawer-content>
+
+
+  <mat-drawer mode="side" #drawer position="end">
+    <button mat-button (click)="closeDrawer()">close</button>
+    @if(store.showMap()){<app-map [location]="store.currentRoom().location"></app-map>}
+    @else{<app-calendar [room]="store.currentRoom()"></app-calendar>}
+  </mat-drawer>
+
+
+</mat-drawer-container>
+

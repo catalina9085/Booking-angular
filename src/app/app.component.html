@@ -1,0 +1,7 @@
+<div class="d-flex flex-column min-vh-100">
+@if(authService.isLoggedIn()){<app-header/>}
+  <div class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </div>
+@if(authService.isLoggedIn()){<app-footer class="sticky-bottom"/>}
+</div>

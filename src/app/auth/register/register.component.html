@@ -1,0 +1,22 @@
+<div id="container" class="d-flex flex-column align-items-center justify-content-center w-100 m-0">
+  <h1 class="mb"> Register</h1>
+  @if(errorMessage()){<div style="color:firebrick">{{errorMessage()}}</div>}
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="d-flex flex-column mt-3">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput type="email" name="email" placeholder="email" [ngModel]="registerRequest().email" (ngModelChange)="emailChanged($event)" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" name="password" placeholder="password" [ngModel]="registerRequest().password" (ngModelChange)="passwordChanged($event)" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Confirm password</mat-label>
+      <input matInput type="password" name="confirmPassword" placeholder="confirm password" [ngModel]="registerRequest().confirmPassword" (ngModelChange)="confirmPasswordChanged($event)" required>
+    </mat-form-field>
+    @if (registerRequest().confirmPassword!='' && registerRequest().confirmPassword != registerRequest().password) {
+      <mat-error>The passwords do not match!</mat-error>
+    }
+    <button type="submit" mat-raised-button class="mt-2">send</button>
+  </form>
+</div>

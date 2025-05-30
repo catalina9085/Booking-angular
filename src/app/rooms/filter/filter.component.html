@@ -1,0 +1,36 @@
+
+<div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; padding: 1rem 0;">
+
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Select date</mat-label>
+      <input matInput [matDatepicker]="picker" [ngModel]="filter()?.date" (ngModelChange)="dateChanged($event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-select
+      [value]="filter()?.amenities"
+      (selectionChange)="amenitiesChanged($event.value)"
+      multiple
+      placeholder="Select amenities"
+      style="min-width: 200px;">
+      @for (amenity of amenities(); track amenity) {
+        <mat-option [value]="amenity">{{ amenity }}</mat-option>
+      }
+    </mat-select>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <span>Availability:</span>
+    <mat-radio-group [value]="filter()?.available" (change)="availabilityChanged($event)">
+      <mat-radio-button [value]="true">Available</mat-radio-button>
+      <mat-radio-button [value]="false">Unavailable</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <button mat-raised-button color="primary"  (click)="resetFilters()">Reset</button>
+
+</div>

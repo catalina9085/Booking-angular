@@ -1,0 +1,23 @@
+.blueBar{
+  background-color:#294361;
+  color:white;
+  text-align:center;
+  font-family: "MV Boli";
+  font-size:12px;
+}
+.whiteBar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:5px;
+  background-color: lightgray;
+}
+a{
+  color:black;
+}
+
+.list-group-item:hover{
+  background-color:rgba(0,0,0,0.1);
+  transition:ease 0.3s;
+  margin-left:2px;
+}

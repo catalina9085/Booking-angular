@@ -1,0 +1,73 @@
+
+<div id="container" class="d-flex gap-3 align-items-center justify-content-center mt-3">
+
+  <form #roomForm="ngForm" (ngSubmit)="onSubmit(roomForm)" style="margin:5px;">
+    @if(store.successMessage()){<div class="fw-bold" style="color:green">{{store.successMessage()}}</div>}
+      <h5>Room details</h5>
+
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>Room name</mat-label>
+        <input matInput type="text" name="name" [ngModel]="room().name"  (ngModelChange)="nameChanged($event)" placeholder="Room name" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>Room capacity</mat-label>
+        <input matInput name="capacity" type="number" [ngModel]="room().capacity"  (ngModelChange)="capacityChanged($event)" placeholder="Room capacity" required>
+      </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mt-2">
+      <mat-label>Select amenities</mat-label>
+      <mat-select
+        [value]="store.selectedAmenities()"
+        (selectionChange)="selectAmenitiesChanged($event.value)"
+        multiple
+        placeholder="Select amenities"
+        style="min-width: 200px;">
+        @for (amenity of store.amenities(); track amenity) {
+          <mat-option [value]="amenity">{{ amenity }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>Other amenities</mat-label>
+        <input matInput type="text" name="amenities" [ngModel]="amenities"  (ngModelChange)="amenitiesChanged($event)" placeholder="Amenities(separated by comma)">
+      </mat-form-field>
+
+      <h5>Room location</h5>
+
+      @if(store.locationError()){<div class="fw-bold" style="color:firebrick">{{store.locationError()}}</div>}
+
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>City</mat-label>
+        <input matInput type="text" name="city" [ngModel]="room().location.city"  (ngModelChange)="cityChanged($event)" placeholder="City">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>Street</mat-label>
+        <input matInput name="street" [ngModel]="room().location.street"  (ngModelChange)="streetChanged($event)" placeholder="Street(optional)">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mt-2">
+        <mat-label>Building</mat-label>
+        <input matInput type="text" name="building" [ngModel]="room().location.building"  (ngModelChange)="buildingChanged($event)" placeholder="Building(optional)">
+      </mat-form-field>
+
+    <button type="submit" mat-flat-button >save</button>
+  </form>
+
+  <google-map
+    height="400px"
+    width="400px"
+    [center]="{ lat: 45.7537, lng: 21.2257 }"
+    [zoom]="12"
+    (mapClick)="mapClicked($event)">
+    <map-marker
+      [position]="store.markerPosition()"
+      [icon]="' https://maps.google.com/mapfiles/ms/icons/red-dot.png'"
+    ></map-marker>
+  </google-map>
+
+</div>
+
+

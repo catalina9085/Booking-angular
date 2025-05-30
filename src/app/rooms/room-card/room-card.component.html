@@ -1,0 +1,15 @@
+<mat-card appearance="outlined" style="margin:20px;">
+  <mat-card-header><h5 style="margin-right:30px;">{{room().name+""}}</h5>
+    @if(room().available){<mat-icon style="color:green">check_circle</mat-icon> Available}
+    @else{<mat-icon style="color:darkred">cancel</mat-icon> Not available}
+  </mat-card-header>
+  <mat-card-content>
+    <h6>{{room().location.city+","+room().location.street+","+room().location.building}}</h6>
+    <p>Capacitate: {{room().capacity}}</p>
+    <mat-chip-set>
+      @for (amenity of room().amenities; track amenity) {
+        <mat-chip>{{amenity}}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-content>
+</mat-card>

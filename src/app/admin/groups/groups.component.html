@@ -1,0 +1,28 @@
+<form #groupForm="ngForm" (ngSubmit)="onSubmit(groupForm)" class="m-3">
+
+    <button mat-raised-button color="accent" (click)="fileInput.click()">Upload CSV</button>
+    <input #fileInput type="file" accept=".csv" hidden (change)="fileChanged($event)">
+    <button mat-button type="submit" color="primary">Save</button>
+    @if(file()){<div style="color:gray;">Selected: {{ file()!.name }}</div>}
+
+</form>
+
+<mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Group name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="size">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Group size </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.size}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columns"></mat-row>
+
+</mat-table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10,15]"></mat-paginator>
+
+
