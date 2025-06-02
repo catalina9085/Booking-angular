@@ -1,7 +1,7 @@
 # Conference Room Booking
 
 Aplicație Angular pentru rezervarea sălilor de conferință.
-
+!!!Cont admin: email: admin@gmail.com parola: admin
 ## Funcționalități principale
 
 - Autentificare cu email și parolă, token JWT pentru securitate  
